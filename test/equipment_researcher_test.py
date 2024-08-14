@@ -1,8 +1,32 @@
 #!/usr/bin/python3
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Slot:
+    length_minutes: int
+
+@dataclass(frozen=True)
+class AvailabilityPeriod:
+    day_of_week_start: str
+    time_of_day_start: str
+    day_of_week_end: str
+    time_of_day_end: str
+    # Validation that the timing is correct?
+
+@dataclass(frozen=True)
+class Availability:
+    periods: list[AvailabilityPeriod]
+
+@dataclass(frozen=True)
+class MaintenanceSchedule:
+    crontab: str
 
 class Equipment:
-    def __init__(self, num_available_slots):
-        self.num_available_slots = num_available_slots
+    def __init__(self,model:str,  availability: Availability, slot_length: Slot, maintenance_schedule: MaintenanceSchedule) -> None:
+        self.model = model
+        self.availability = availability
+        self.slot_length = slot_length
+        self.maintenance_schedule = maintenance_schedule
 
     def get_available_slots(self):
         pass
